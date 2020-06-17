@@ -46,12 +46,28 @@ export default {
     '@nuxtjs/pwa',
     // Doc: https://github.com/nuxt-community/dotenv-module
     '@nuxtjs/dotenv',
+    '@nuxtjs/markdownit'
   ],
+  markdownit: {
+    injected: true
+  },
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
+  },
+  generate: {
+    routes: function () {
+      const fs = require('fs')
+      const path = require('path')
+      return fs.readdirSync('./assets/content/blog').map(file => {
+        return {
+          route: `/blog/${path.parse(file).name}`,
+          payload: require(`./assets/content/blog/${file}`)
+        }
+      })
+    }
   },
   /*
   ** Build configuration

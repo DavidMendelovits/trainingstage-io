@@ -24,7 +24,7 @@
         >
         <div class="columns">
           <nuxt-link to="/" class="navbar-item column">Home</nuxt-link>
-          <nuxt-link to="/" class="navbar-item column">About</nuxt-link>
+          <nuxt-link to="/blog" class="navbar-item column">Blog</nuxt-link>
           <nuxt-link to="/" class="navbar-item column">Something Else</nuxt-link>
         </div>
       </div>
