@@ -195,7 +195,6 @@ export default {
 }
 
 #progressBar {
-  opacity: 70%;
   height: 35px;
   width: 100%;
   z-index: 5;
