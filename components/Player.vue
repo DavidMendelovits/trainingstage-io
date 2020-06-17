@@ -186,6 +186,7 @@ export default {
 <style scoped>
 .videoContainer {
   position: relative;
+  display: inline-flex;
 }
 
 #videoControls {
@@ -196,7 +197,6 @@ export default {
 
 #progressBar {
   height: 35px;
-  width: 100%;
   z-index: 5;
 }
 #frameRate {
