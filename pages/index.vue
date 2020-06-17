@@ -1,39 +1,24 @@
 <template>
-  <div class="container">
-    <div>
-      <logo />
-      <h1 class="title">
-        trainingstage
-      </h1>
-      <h2 class="subtitle">
-        training stage -  a platform for discussing acrobatics of all sorts. built with nuxt (vue), netlifycms, &amp; bulma
-      </h2>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >
-          GitHub
-        </a>
+  <div>
+    <section class="hero">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title">
+            Training Stage
+          </h1>
+        </div>
       </div>
+    </section>
+    <Player />
     </div>
-  </div>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
+import Player from '../components/Player'
 
 export default {
   components: {
-    Logo
+    Player
   }
 }
 </script>
