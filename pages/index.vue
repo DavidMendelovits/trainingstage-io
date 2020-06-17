@@ -1,24 +1,17 @@
 <template>
   <div>
-    <section class="hero">
-      <div class="hero-body">
-        <div class="container">
-          <h1 class="title">
-            Training Stage
-          </h1>
-        </div>
-      </div>
-    </section>
+    <Hero />
     <Player />
     </div>
 </template>
 
 <script>
 import Player from '../components/Player'
-
+import Hero from '../components/SiteHero'
 export default {
   components: {
-    Player
+    Player,
+    Hero
   },
   head () {
     return {
@@ -28,7 +21,23 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+
+.image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  opacity: 30%;
+}
+.content {
+  position: absolute;
+  z-index: 1;
+}
+.card {
+  position: relative;
+  width: 100%;
+}
 .container {
   margin: 0 auto;
   min-height: 100vh;

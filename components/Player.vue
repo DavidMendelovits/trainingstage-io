@@ -10,19 +10,55 @@
       :src="src"
       type="video/mp4"
     />
-    <section>
-    <div id="videoControls">
-      {{ frameRates[frameRate] }}
-      {{ currentTime }}
-      <div id="videoCurrentTime"></div>
-      <div id="videoDuration"></div>
-      <div ref="progressbar"></div>
+    <div id="videoControls" >
+      <progress
+        :value="`${currentTime / duration}`"
+        max="1"
+        id="progressBar"
+        ref="progressbar"
+        class="progress is-dark"
+        v-on:click="handleSeeking"
+      />
     </div>
-    </section>
+    <div
+      id="frameRate"
+      ref="framerate"
+      class="container"
+    >
+      <span class="icon is-dark">
+        <i class="icon-speedometer" />
+        {{ frameRates[frameRate] }}x
+      </span>
+    </div>
+    <div id="toolbar" class="container">
+      <span class="icon is-small">
+        <button class="button is-small">
+          <i class="icon-user" />
+        </button>
+      </span>
+      <span class="icon is-small">
+        <button class="button is-small">
+          <i class="icon-loop" />
+        </button>
+      </span>
+      <span class="icon is-small">
+        <button class="button is-small">
+          <i class="icon-film" />
+        </button>
+      </span>
+      <span class="icon is-small">
+        <button class="button is-small">
+          <i class="icon-crop" />
+        </button>
+      </span>
+    </div>
   </div>
 </template>
 
 <script>
+import line from '../assets/line.svg'
+import dot from '../assets/dot.svg'
+import tile from '../assets/tile.svg'
 export default {
   props: {
     src: {
@@ -30,13 +66,11 @@ export default {
       default: 'default.mp4'
     }
   },
-  computed: {
-    player () {
-      return this.$refs.player
-    }
-  },
   data () {
     return {
+      line: line,
+      dot: dot,
+      tile: tile,
       currentTime: 0,
       duration: 0,
       frame: (1/22),
@@ -63,6 +97,14 @@ export default {
 
   },
   methods: {
+    handleSeeking (e) {
+      console.log('seeking...')
+      console.log(e)
+      const face = (e.touches) ? e.touches[0] : e
+      const videoBorderInfo = e.target.getBoundingClientRect()
+      console.log(face, videoBorderInfo)
+      this.$refs.player.currentTime = (this.duration) * ((face.x + videoBorderInfo.left) / videoBorderInfo.right)
+    },
     loadmetadata (e) {
       console.log(e)
       console.log(this.$refs.progressBar)
@@ -142,4 +184,48 @@ export default {
 </script>
 
 <style scoped>
+.videoContainer {
+  position: relative;
+}
+
+#videoControls {
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+#progressBar {
+  opacity: 70%;
+  height: 35px;
+  width: 100%;
+  will-change: transform;
+  transform-origin: 0 50%;
+  overflow: hidden;
+}
+#frameRate {
+  position: absolute;
+  height: 10%;
+  width: 10%;
+  top: 90%;
+  left: 0;
+  text-align: center;
+  font-weight: bold;
+  color: white;
+}
+#toolbar {
+  position: absolute;
+  top: 90%;
+  height: 8.7777%;
+  right: 0;
+}
+
+#progressDot {
+  position: absolute;
+  height: 35px;
+  width: 35px;
+  will-change: transform;
+  transform-origin: 0 50%;
+  transform: scale(1);
+}
+
 </style>
