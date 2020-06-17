@@ -198,9 +198,7 @@ export default {
   opacity: 70%;
   height: 35px;
   width: 100%;
-  will-change: transform;
-  transform-origin: 0 50%;
-  overflow: hidden;
+  z-index: 5;
 }
 #frameRate {
   position: absolute;
