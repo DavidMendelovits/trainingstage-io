@@ -2,6 +2,7 @@
   <div>
     <Hero />
     <Player />
+    <Player />
     </div>
 </template>
 

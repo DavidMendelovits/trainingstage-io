@@ -21,25 +21,30 @@
         v-on:click="handleSeeking"
       />
       <div
-        class="cursor"
-        id="begin"
-        ref="begincursor"
-        draggable="true"
-        v-on:dragstart="handleCursor"
-        v-on:dragend="handleCursor"
-        v-on:drag="handleCursor"
-        v-on:touchmove="handleCursor"
-      />
-      <div
-        class="cursor"
-        id="end"
-        ref="endcursor"
-        draggable="true"
-        v-on:dragstart="handleCursor"
-        v-on:dragend="handleCursor"
-        v-on:drag="handleCursor"
-        v-on:touchmove="handleCursor"
-      />
+        class="cursors"
+        ref="cursors"
+      >
+        <div
+          class="cursor"
+          id="begin"
+          ref="begincursor"
+          draggable="true"
+          v-on:dragstart="handleCursor"
+          v-on:dragend="handleCursor"
+          v-on:drag="handleCursor"
+          v-on:touchmove="handleCursor"
+        />
+        <div
+          class="cursor"
+          id="end"
+          ref="endcursor"
+          draggable="true"
+          v-on:dragstart="handleCursor"
+          v-on:dragend="handleCursor"
+          v-on:drag="handleCursor"
+          v-on:touchmove="handleCursor"
+        />
+      </div>
     </div>
     <div
       id="frameRate"
@@ -52,11 +57,11 @@
       </span>
     </div>
     <div id="toolbar" class="container">
-      <span class="icon is-medium">
-        <i v-on:click="handleUtil($event, 'trimEnd')" class="icon-arrow-left" />
+      <span v-on:click="handleUtil($event, 'trim')" class="icon is-medium">
+        <i class="icon-film" />
       </span>
-      <span class="icon is-medium">
-        <i v-on:click="handleUtil($event, 'trimBegin')" class="icon-arrow-right" />
+      <span>
+        {{ currentTime }}
       </span>
     </div>
   </div>
@@ -87,6 +92,9 @@ export default {
       isPaused: true,
       trimRight: null,
       trimLeft: null,
+      isTrimming: false,
+      offsetStart: 0,
+      offsetEnd: 0,
       isLooping: true
     }
   },
@@ -109,7 +117,7 @@ export default {
   methods: {
     handleEnd (e) {
       console.log('handleEnd()', e)
-      if (this.trimLeft) {
+      if (this.isTrimming && this.trimLeft) {
         const borderInfo = e.target.getBoundingClientRect()
         console.log(this.trimLeft.slice(0, -2), borderInfo)
         let newval = (this.duration) * (this.trimLeft.slice(0, -2) / borderInfo.right)
@@ -120,7 +128,8 @@ export default {
     },
     handleCursor (e) {
       console.log('handleCursor()', e, e.target)
-      const begin = (e.target.id === 'begin')
+      if (!this.isTrimming) { return ; }
+      let begin = (e.target.id === 'begin')
       let pos
       if (e.type === 'drag' || e.type === 'dragend') {
         pos = `${e.x}px`
@@ -128,19 +137,31 @@ export default {
         console.log('touchmove')
         pos = `${Math.max(e.touches[0].clientX, 0)}px`
       } else { return ;}
-      e.target.style.left = pos
+
       if (begin) {
+        e.target.style.left = pos
         this.trimLeft = pos
+        console.log(e.target.getBoundingClientRect())
+        this.offsetStart =
+            (this.duration) *
+            (this.trimLeft.slice(0, -2) / e.target.parentElement.getBoundingClientRect().right)
       } else {
+        e.target.style.left = pos
         this.trimRight = pos
+        console.log(e.target.getBoundingClientRect())
+        this.offsetEnd =
+            (this.duration) *
+            (this.trimRight.slice(0, -2) / e.target.parentElement.getBoundingClientRect().right)
       }
     },
     toggleTrim () {
-      this.trimming = !this.trimming
-
-    },
-    trimEnd () {
-
+      this.$refs.cursors.style.visibility = ((this.isTrimming = !this.isTrimming))
+                                          ? 'visible'
+                                          : 'hidden'
+      if (!this.isTrimming) {
+        //this.trimLeft = null
+        //this.trimRight = null
+      }
     },
     handleUtil (e, util) {
       console.log('handle Util')
@@ -148,7 +169,8 @@ export default {
       e.target.style.color = (e.target.style.color === 'red')
                              ? 'white'
                              : 'red'
-      if (util === 'trimEnd') {
+      if (util === 'trim') {
+        this.toggleTrim()
 
       }
     },
@@ -169,6 +191,12 @@ export default {
     handleTime (e) {
       console.log(e)
       this.currentTime = e.target.currentTime
+      console.log(this.offsetStart,this.offsetEnd)
+      if ((!(this.trimRight)) || !(this.isTrimming)) { return ; }
+      if (!(this.currentTime <= this.offsetEnd)) {
+        this.$refs.player.currentTime = this.offsetStart
+      }
+
     },
     slowDown () {
       this.$refs.player.playbackRate = this.frameRates[(this.frameRate > 0) ? --this.frameRate : 0]
@@ -238,6 +266,7 @@ export default {
 }
 </script>
 
+
 <style scoped>
 .videoContainer {
   position: relative;
@@ -249,13 +278,20 @@ export default {
   top: 0;
   width: 100%;
 }
+.cursors {
+  display: flex;
+  width: 100%;
+  visibility: hidden;;
+}
 
 .cursor {
   position: absolute;
-  border-left: 6px solid red;
+  display: flex;
   border-radius: 5px;
+  background-color: red;
   height: 35px;
-  z-index: 6
+  width: 5px;
+  z-index: 6;
 }
 #end {
   right: 0px;
