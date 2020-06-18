@@ -21,4 +21,12 @@ collections:
       - { label: 'Body', name: 'body', widget: 'markdown' }
       - { label: 'file upload', name: 'file_upload', widget: 'file', default: '/img/back_flip.mp4'}
       - { label: "Location", name: "location", widget: "map" }
-
+  - name: 'tutorials'
+    label: 'Tutorials'
+    format: 'json'
+    file: 'assets/content/tutorials.json'
+    editor:
+      preview: true
+    fields:
+      - { label: 'Title', name: 'title', widget: 'string' }
+      - { label: 'Entry', name: 'entry', widget: 'file' }
