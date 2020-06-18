@@ -13,7 +13,7 @@ collections:
     create: true
     slug: '{{year}}-{{month}}-{{day}}-{{slug}}'
     editor:
-      preview: false
+      preview: true
     fields:
       - { label: 'Title', name: 'title', widget: 'string' }
       - { label: 'Publish Date', name: 'date', widget: 'datetime' }
@@ -30,4 +30,4 @@ collections:
         file: 'assets/content/tutorials.json'
         fields:
           - { label: Name, name: name, widget: string }
-          - { label: Example, name: example, widget: string }
+          - { label: Nam, name: name, widget: string }
