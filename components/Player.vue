@@ -8,10 +8,11 @@
       v-on:timeupdate="handleTime"
       v-on:loadedmetadata="loadmetadata"
       v-on:ended="handleEnd"
+      loop
       :src="src"
       type="video/mp4"
     />
-    <div id="videoControls" >
+    <div id="videoControls" class="controls" >
       <progress
         :value="`${currentTime / duration}`"
         max="1"
@@ -56,7 +57,7 @@
         {{ frameRates[frameRate] }}x
       </span>
     </div>
-    <div id="toolbar" class="container">
+    <div id="toolbar" class="level">
       <span v-on:click="handleUtil($event, 'trim')" class="icon is-medium">
         <i class="icon-film" />
       </span>
@@ -109,10 +110,17 @@ export default {
       }
     }
   },
+  watch: {
+    src: function (source) {
+      this.$refs.player.load()
+    }
+  },
   mounted () {
     console.log('mounted')
-    console.log(this.$refs.progressBar)
-
+    this.$refs.player.load()
+  },
+  created () {
+    console.log('created')
   },
   methods: {
     handleEnd (e) {
@@ -184,7 +192,7 @@ export default {
     },
     loadmetadata (e) {
       console.log(e)
-      console.log(this.$refs.progressBar)
+      console.log(this.$refs.progressar)
       this.duration = e.target.duration
       //this.$refs.progressBar.style.transform = `scaleX(${this.$refs.video.currentTime / this.$refs.video.duration})`
     },
@@ -270,11 +278,19 @@ export default {
 <style scoped>
 .videoContainer {
   position: relative;
-  display: inline-flex;
+  display: flex;
+  flex-direction: column;
+}
+
+
+#player {
+  width: 100%;
 }
 
 #videoControls {
   position: absolute;
+  object-fit: contain;
+  display: initial;
   top: 0;
   width: 100%;
 }
@@ -305,7 +321,10 @@ export default {
   position: absolute;
   height: 35px;
   z-index: 5;
+  width: 100%;
+  align-self: center;
 }
+
 
 #trimControls {
   position: absolute;

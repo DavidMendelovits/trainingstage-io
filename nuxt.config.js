@@ -50,7 +50,9 @@ export default {
     'nuxt-simple-line-icons'
   ],
   markdownit: {
-    injected: true
+    injected: true,
+    html: true,
+    linkify: true
   },
   /*
   ** Axios module configuration

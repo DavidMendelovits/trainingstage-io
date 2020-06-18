@@ -1,18 +1,19 @@
 <template>
   <div>
     <Hero />
-    <Player />
-    <Player />
+    <Stage />
     </div>
 </template>
 
 <script>
 import Player from '../components/Player'
+import Stage from '../components/Stage'
 import Hero from '../components/SiteHero'
 export default {
   components: {
     Player,
-    Hero
+    Hero,
+    Stage
   },
   head () {
     return {
