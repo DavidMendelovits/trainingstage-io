@@ -23,10 +23,10 @@ collections:
       - { label: "Location", name: "location", widget: "map" }
   - name: 'tutorials'
     label: 'Tutorials'
-    format: 'json'
-    file: 'assets/content/tutorials.json'
-    editor:
-      preview: true
-    fields:
-      - { label: 'Title', name: 'title', widget: 'string' }
-      - { label: 'Entry', name: 'entry', widget: 'file' }
+    files:
+      - label: 'Tutorial'
+        format: 'json'
+        file: 'assets/content/tutorials.json'
+        fields:
+          - { label: Name, name: name, widget: string }
+          - { label: Name, name: name, widget: string }
