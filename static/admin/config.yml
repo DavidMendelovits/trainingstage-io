@@ -25,8 +25,9 @@ collections:
     label: 'Tutorials'
     files:
       - label: 'Tutorial'
+        name: 'tutorial'
         format: 'json'
         file: 'assets/content/tutorials.json'
         fields:
           - { label: Name, name: name, widget: string }
-          - { label: Name, name: name, widget: string }
+          - { label: Example, name: example, widget: string }
