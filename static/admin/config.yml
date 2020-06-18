@@ -30,4 +30,3 @@ collections:
         file: 'assets/content/tutorials.json'
         fields:
           - { label: Name, name: name, widget: string }
-          - { label: Nam, name: name, widget: string }
