@@ -7,6 +7,7 @@
       v-on:click="handleScrub"
       v-on:timeupdate="handleTime"
       v-on:loadedmetadata="loadmetadata"
+      v-on:ended="handleEnd"
       :src="src"
       type="video/mp4"
     />
@@ -18,6 +19,26 @@
         ref="progressbar"
         class="progress is-dark"
         v-on:click="handleSeeking"
+      />
+      <div
+        class="cursor"
+        id="begin"
+        ref="begincursor"
+        draggable="true"
+        v-on:dragstart="handleCursor"
+        v-on:dragend="handleCursor"
+        v-on:drag="handleCursor"
+        v-on:touchmove="handleCursor"
+      />
+      <div
+        class="cursor"
+        id="end"
+        ref="endcursor"
+        draggable="true"
+        v-on:dragstart="handleCursor"
+        v-on:dragend="handleCursor"
+        v-on:drag="handleCursor"
+        v-on:touchmove="handleCursor"
       />
     </div>
     <div
@@ -31,25 +52,11 @@
       </span>
     </div>
     <div id="toolbar" class="container">
-      <span class="icon is-small">
-        <button class="button is-small">
-          <i class="icon-user" />
-        </button>
+      <span class="icon is-medium">
+        <i v-on:click="handleUtil($event, 'trimEnd')" class="icon-arrow-left" />
       </span>
-      <span class="icon is-small">
-        <button class="button is-small">
-          <i class="icon-loop" />
-        </button>
-      </span>
-      <span class="icon is-small">
-        <button class="button is-small">
-          <i class="icon-film" />
-        </button>
-      </span>
-      <span class="icon is-small">
-        <button class="button is-small">
-          <i class="icon-crop" />
-        </button>
+      <span class="icon is-medium">
+        <i v-on:click="handleUtil($event, 'trimBegin')" class="icon-arrow-right" />
       </span>
     </div>
   </div>
@@ -77,7 +84,10 @@ export default {
       show: true,
       frameRates: [0.25, 0.5, .75, 1, 1.25, 1.5, 1.75, 2],
       frameRate: 3,
-      isPaused: true
+      isPaused: true,
+      trimRight: null,
+      trimLeft: null,
+      isLooping: true
     }
   },
   computed: {
@@ -97,6 +107,51 @@ export default {
 
   },
   methods: {
+    handleEnd (e) {
+      console.log('handleEnd()', e)
+      if (this.trimLeft) {
+        const borderInfo = e.target.getBoundingClientRect()
+        console.log(this.trimLeft.slice(0, -2), borderInfo)
+        let newval = (this.duration) * (this.trimLeft.slice(0, -2) / borderInfo.right)
+        console.log(newval)
+        this.$refs.player.currentTime = newval
+        this.togglePlayPause()
+      }
+    },
+    handleCursor (e) {
+      console.log('handleCursor()', e, e.target)
+      const begin = (e.target.id === 'begin')
+      let pos
+      if (e.type === 'drag' || e.type === 'dragend') {
+        pos = `${e.x}px`
+      } else if (e.type === 'touchmove') {
+        console.log('touchmove')
+        pos = `${Math.max(e.touches[0].clientX, 0)}px`
+      } else { return ;}
+      e.target.style.left = pos
+      if (begin) {
+        this.trimLeft = pos
+      } else {
+        this.trimRight = pos
+      }
+    },
+    toggleTrim () {
+      this.trimming = !this.trimming
+
+    },
+    trimEnd () {
+
+    },
+    handleUtil (e, util) {
+      console.log('handle Util')
+      console.log(e)
+      e.target.style.color = (e.target.style.color === 'red')
+                             ? 'white'
+                             : 'red'
+      if (util === 'trimEnd') {
+
+      }
+    },
     handleSeeking (e) {
       console.log('seeking...')
       console.log(e)
@@ -195,10 +250,43 @@ export default {
   width: 100%;
 }
 
+.cursor {
+  position: absolute;
+  border-left: 6px solid red;
+  border-radius: 5px;
+  height: 35px;
+  z-index: 6
+}
+#end {
+  right: 0px;
+}
+
+#begin {
+  left: 0px;
+}
+
 #progressBar {
+  position: absolute;
   height: 35px;
   z-index: 5;
 }
+
+#trimControls {
+  position: absolute;
+  z-index: 6;
+  top: 0;
+  color: red;
+}
+
+#icon-arrow-right {
+  cursor: move;
+  left: 0;
+}
+
+#icon-arrow-left {
+  left: 100%;
+}
+
 #frameRate {
   position: absolute;
   height: 10%;
@@ -214,7 +302,11 @@ export default {
   top: 90%;
   height: 8.7777%;
   right: 0;
+  color: white;
+  background-color: black;
+  border-radius: 10px;
 }
+
 
 #progressDot {
   position: absolute;
