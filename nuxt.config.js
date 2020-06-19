@@ -72,18 +72,18 @@ export default {
   */
   axios: {
   },
-  generate: {
-    routes: function () {
-      const fs = require('fs')
-      const path = require('path')
-      return fs.readdirSync('./assets/content/blog').map(file => {
-        return {
-          route: `/blog/${path.parse(file).name}`,
-          payload: require(`./assets/content/blog/${file}`)
-        }
-      })
-    }
-  },
+  // generate: {
+  //   routes: function () {
+  //     const fs = require('fs')
+  //     const path = require('path')
+  //     return fs.readdirSync('./assets/content/blog').map(file => {
+  //       return {
+  //         route: `/blog/${path.parse(file).name}`,
+  //         payload: require(`./assets/content/blog/${file}`)
+  //       }
+  //     })
+  //   }
+  // },
   /*
   ** Build configuration
   */
