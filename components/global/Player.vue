@@ -69,9 +69,6 @@
 </template>
 
 <script>
-import line from '../assets/line.svg'
-import dot from '../assets/dot.svg'
-import tile from '../assets/tile.svg'
 export default {
   props: {
     src: {
@@ -81,9 +78,6 @@ export default {
   },
   data () {
     return {
-      line: line,
-      dot: dot,
-      tile: tile,
       currentTime: 0,
       duration: 0,
       frame: (1/22),

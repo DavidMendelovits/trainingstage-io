@@ -19,7 +19,6 @@ collections:
       - { label: 'Publish Date', name: 'date', widget: 'datetime' }
       - { label: 'Description', name: 'description', widget: 'string' }
       - { label: 'Body', name: 'body', widget: 'markdown' }
-      - { label: 'file upload', name: 'file_upload', widget: 'file', default: '/img/back_flip.mp4'}
   - name: 'tutorials'
     label: 'Tutorials'
     files:

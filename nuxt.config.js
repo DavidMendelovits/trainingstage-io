@@ -1,6 +1,7 @@
 
 export default {
   mode: 'universal',
+  target: 'static',
   /*
   ** Headers of the page
   */
@@ -47,8 +48,19 @@ export default {
     // Doc: https://github.com/nuxt-community/dotenv-module
     '@nuxtjs/dotenv',
     '@nuxtjs/markdownit',
-    'nuxt-simple-line-icons'
+    'nuxt-simple-line-icons',
+    '@nuxt/components',
+    '@nuxt/content'
   ],
+  components: [
+    {
+      path: '~/components/global',
+      global: true
+    }
+  ],
+  content: {
+    dir: 'assets/content'
+  },
   markdownit: {
     injected: true,
     html: true,

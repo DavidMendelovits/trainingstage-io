@@ -1,20 +1,12 @@
 <template>
   <div>
-    <Hero />
+    <SiteHero />
     <Stage />
     </div>
 </template>
 
 <script>
-import Player from '../components/Player'
-import Stage from '../components/Stage'
-import Hero from '../components/SiteHero'
 export default {
-  components: {
-    Player,
-    Hero,
-    Stage
-  },
   head () {
     return {
       script: [{ src: 'https://identity.netlify.com/v1/netlify-identity-widget.js' }]

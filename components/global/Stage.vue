@@ -54,12 +54,7 @@
 </template>
 
 <script>
-import Player from './Player'
-
 export default {
-  components: {
-    Player
-  },
   data () {
     return {
       split: false,
