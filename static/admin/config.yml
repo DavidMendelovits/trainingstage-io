@@ -20,7 +20,6 @@ collections:
       - { label: 'Description', name: 'description', widget: 'string' }
       - { label: 'Body', name: 'body', widget: 'markdown' }
       - { label: 'file upload', name: 'file_upload', widget: 'file', default: '/img/back_flip.mp4'}
-      - { label: "Location", name: "location", widget: "map" }
   - name: 'tutorials'
     label: 'Tutorials'
     files:
