@@ -3,6 +3,6 @@
   "date": "2020-06-18T22:12:09.772Z",
   "title": "testing!",
   "description": "what do",
-  "body": "1. list time\n2. oh yeah\n\n`<html>\n\n<video src=\"/img/back_flip.mp4\" style=\"width:100%;\">\n\n</html>`\n\n```html\n`<html>\n\n<video src=\"/img/back_flip.mp4\" style=\"width:100%;\">\n</video>\n\n</html>`\n```\n\nhello",
+  "body": "1. list time\n2. oh yeah\n\n<html>\n\n<video src=\"/img/back_flip.mp4\" style=\"width:100%;\">\n\n</html>\n\nhello",
   "location": "{\"type\":\"Point\",\"coordinates\":[9.4358826,14.2870081]}"
 }
