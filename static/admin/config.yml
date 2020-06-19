@@ -9,7 +9,7 @@ publish_mode: editorial_workflow
 collections:
   - name: 'blog'
     label: 'Blog'
-    format: 'markdown'
+    format: 'frontmatter'
     folder: 'assets/content/blog'
     create: true
     slug: '{{year}}-{{month}}-{{day}}-{{slug}}'
