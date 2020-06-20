@@ -73,7 +73,7 @@ export default {
   props: {
     src: {
       type: String,
-      default: 'default.mp4'
+      default: '/default.mp4'
     }
   },
   data () {

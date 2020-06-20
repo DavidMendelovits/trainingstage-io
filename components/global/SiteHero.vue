@@ -1,6 +1,6 @@
 <template>
   <div class="hero is-primary has-background">
-    <img alt="Fill Murray" class="hero-background is-transparent" src="brand.png" />
+    <img alt="Fill Murray" class="hero-background is-transparent" src="/brand.png" />
     <div class="hero-body">
       <div class="container">
         <h1 class="title">

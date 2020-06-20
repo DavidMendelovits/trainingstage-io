@@ -3,7 +3,7 @@
     <nav class="navbar has-shadow  is-transparent" role="navigation" aria-label="main navigation">
       <div class="navbar-brand dense">
         <nuxt-link class="navbar-item" to="/">
-          <img id="brand-item" src="brand.png">
+          <img id="brand-item" src="/brand.png">
         </nuxt-link>
         <a
           role="button"
