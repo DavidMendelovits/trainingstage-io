@@ -13,6 +13,6 @@ There are tons of ways to teach yourself how to do a back flip.
 
 <player></player>
 
-`<stage><stage>`
+<stage></stage>
 
 <img src="/brand.png" ></img>
