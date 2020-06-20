@@ -11,10 +11,8 @@ There are tons of ways to teach yourself how to do a back flip.
 
 →not watching a tutorial
 
-
-
 <player></player>
 
-<stage><stage>
+`<stage><stage>`
 
-<img src="~/brand.png" ></img>
+<img src="/brand.png" ></img>
