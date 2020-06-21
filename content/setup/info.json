@@ -1,0 +1,15 @@
+{
+  "sitename": "Training Stage",
+  "sitedescription": "A place to share resources on skills of all sorts",
+  "siteicon": "/img/training-stage-v0.png",
+  "showmenu": true,
+  "altlayout": false,
+  "menu": [
+    {
+      "name": "instagram",
+      "link": "https://www.instagram.com/training_stage",
+      "position": "1"
+    }
+  ],
+  "emailsignup": true
+}
