@@ -37,7 +37,7 @@ collections:
     - label: "Site Info"
       name: "info"
       format: 'json'
-      file: "content/setup/info.json"
+      file: "assets/content/setup/info.json"
       fields:
         - {label: Site Name, name: sitename, widget: string}
         - {label: Site Description, name: sitedescription, widget: string}
@@ -55,7 +55,7 @@ collections:
     - label: "Connect"
       name: "connect"
       format: 'json'
-      file: "content/setup/connect.json"
+      file: "assets/content/setup/connect.json"
       fields:
         - label: 'Links'
           name: 'connectlinks'
