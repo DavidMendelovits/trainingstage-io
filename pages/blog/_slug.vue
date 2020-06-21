@@ -7,7 +7,7 @@
 <script>
 export default {
   async asyncData ({ app, params, $content }) {
-    const post = await $content(`blog/${params.slug}`).fetch()
+    const post = await $content(`posts/${params.slug}`).fetch()
     return {
       post
     }
