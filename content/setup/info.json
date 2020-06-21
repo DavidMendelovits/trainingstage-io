@@ -3,7 +3,7 @@
   "sitedescription": "A place to share resources on skills of all sorts",
   "siteicon": "/img/training-stage-v0.png",
   "showmenu": true,
-  "altlayout": false,
+  "altlayout": true,
   "menu": [
     {
       "name": "instagram",
