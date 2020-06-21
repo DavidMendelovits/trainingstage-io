@@ -29,7 +29,9 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '~/plugins/v-hotkeys'
+    '~/plugins/v-hotkeys',
+    '~/plugins/v-embed',
+    '~/plugins/v-youtube'
   ],
   /*
   ** Nuxt.js dev-modules

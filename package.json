@@ -20,7 +20,9 @@
     "@nuxtjs/pwa": "^3.0.0-0",
     "nuxt": "^2.0.0",
     "nuxt-simple-line-icons": "^1.0.2",
-    "v-hotkey": "^0.8.0"
+    "v-hotkey": "^0.8.0",
+    "vue-embed": "^2.1.1",
+    "vue-youtube": "^1.4.0"
   },
   "devDependencies": {
     "eslint-config-prettier": "^6.10.0",

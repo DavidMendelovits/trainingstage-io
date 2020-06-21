@@ -2,6 +2,8 @@
   <div>
     <SiteHero />
     <Stage />
+    <!-- <InstaEmbed hideCaption url="https://www.instagram.com/p/CBWIdLoHplg/" /> -->
+    <YoutubeEmbed />
     </div>
 </template>
 
@@ -10,6 +12,11 @@ export default {
   head () {
     return {
       script: [{ src: 'https://identity.netlify.com/v1/netlify-identity-widget.js' }]
+    }
+  },
+  data () {
+    return {
+
     }
   }
 }
