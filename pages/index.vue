@@ -1,7 +1,6 @@
 <template>
   <div>
     <SiteHero />
-    <Stage />
     <!-- <InstaEmbed hideCaption url="https://www.instagram.com/p/CBWIdLoHplg/" /> -->
     <YoutubeEmbed />
     </div>
@@ -31,14 +30,17 @@ export default {
   z-index: 0;
   opacity: 30%;
 }
+
 .content {
   position: absolute;
   z-index: 1;
 }
+
 .card {
   position: relative;
   width: 100%;
 }
+
 .container {
   margin: 0 auto;
   min-height: 100vh;
