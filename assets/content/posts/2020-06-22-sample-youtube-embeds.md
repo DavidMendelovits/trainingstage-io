@@ -15,9 +15,9 @@ https://youtu.be/L3EObKYmDdk
 
 <youtube-embed link="https://youtu.be/L3EObKYmDdk"></youtube-embed>
 
-`<youtube-embed :link="https://www.youtube.com/watch?v=HDNAIfDTrtE"></youtube-embed>`
+<youtube-embed link="https://www.youtube.com/watch?v=HDNAIfDTrtE"></youtube-embed>
 
-`<youtube-embed :link="https://youtu.be/HDNAIfDTrtE"></youtube-embed>`
+<youtube-embed link="https://youtu.be/HDNAIfDTrtE"></youtube-embed>
 
 hello!
 
