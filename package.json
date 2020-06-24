@@ -18,6 +18,7 @@
     "@nuxtjs/dotenv": "^1.4.0",
     "@nuxtjs/markdownit": "^1.2.9",
     "@nuxtjs/pwa": "^3.0.0-0",
+    "draggabilly": "^2.3.0",
     "nuxt": "^2.0.0",
     "nuxt-simple-line-icons": "^1.0.2",
     "v-hotkey": "^0.8.0",

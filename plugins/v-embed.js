@@ -1,4 +1,4 @@
 import Vue from 'vue'
-import VEmbed from 'vue-embed'
+import embed from 'vue-embed'
 
-Vue.use(VEmbed)
+Vue.use(embed)

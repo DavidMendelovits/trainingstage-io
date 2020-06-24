@@ -56,6 +56,13 @@ export default {
       currentTime: 0
     }
   },
+  mounted () {
+    console.log('mounted()')
+    console.log(this.controller)
+    // this.controller.addEventListener('ontimeupdate', (e) => {
+    //    console.log(e.target.currentTime)
+    // })
+  },
   methods: {
     handleSeeking (e) {
       console.log('seeking...')
@@ -100,7 +107,15 @@ export default {
 <style scoped>
 .controls {
   position: absolute;
+  display: flex;
+  width: 100%;
   top: 90%;
   height: 10%;
+}
+#progressBar {
+  height: 35px;
+  z-index: 5;
+  width: 100%;
+  align-self: center;
 }
 </style>

@@ -1,14 +1,20 @@
 <template>
-  <div class="content">
-    <!-- <youtube :video-id="vidId" ref="youtube"></youtube> -->
+  <div
+    class="content"
+  >
     <youtube
       :video-id="vidId"
       :player-vars="options"
       @ready="ready"
+      @playing="handleTime"
       ref="youtube"
     >
     </youtube>
-    <ControlBar :v-if="player" :controller="player"/>
+    <ControlBar
+      v-if="isController"
+      :controller="control"
+      :duration="duration"
+    />
   </div>
 </template>
 <script>
@@ -24,25 +30,28 @@ export default {
       isPlaying: false,
       options: {
         rel: 0,
-        modestbranding: true
+        modestbranding: 1,
+        startSeconds: 5,
+        endSeconds: 10
       },
-      controller: false,
-      duration: 0
+      isController: false,
+      control: {},
+      duration: 0,
+      player: null
     }
   },
   computed: {
     vidId () {
       return this.getID()
-    },
-    player () {
-      return this.$refs.youtube.player
     }
   },
   methods: {
-    ready (e) {
+    async ready (e) {
       this.pl = e.target
-      this.controller = true
-      this.duration = this.$refs.youtube.player.getDuration()
+      this.duration = await this.$refs.youtube.player.getDuration()
+      this.control = this.$refs.youtube.player
+      this.control.addEventListener()
+      this.isController = true
       console.log('ready()', e)
     },
     getID () {
@@ -59,6 +68,13 @@ export default {
       if (!(this.isPlaying = !this.isPlaying)) {
 
       }
+    },
+    handleTime (e) {
+      console.log(e)
+      //this.currentTime = e.target.currentTime
+    },
+    handleHover (e) {
+      console.log(e)
     }
   }
 }

@@ -31,7 +31,8 @@ export default {
   plugins: [
     '~/plugins/v-hotkeys',
     '~/plugins/v-embed',
-    '~/plugins/v-youtube'
+    '~/plugins/v-youtube',
+    {src: '~/plugins/draggabilly', mode: 'client'}
   ],
   /*
   ** Nuxt.js dev-modules

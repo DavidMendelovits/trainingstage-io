@@ -12,39 +12,40 @@
       :src="src"
       type="video/mp4"
     />
-    <div id="videoControls" class="controls" >
-      <progress
-        :value="`${currentTime / duration}`"
-        max="1"
-        id="progressBar"
-        ref="progressbar"
-        class="progress is-dark"
-        v-on:click="handleSeeking"
-      />
-      <div
-        class="cursors"
-        ref="cursors"
-      >
-        <div
-          class="cursor"
-          id="begin"
-          ref="begincursor"
-          draggable="true"
-          v-on:dragstart="handleCursor"
-          v-on:dragend="handleCursor"
-          v-on:drag="handleCursor"
-          v-on:touchmove="handleCursor"
+    <div id="videoControls" class="controls" :style="`clip-path:inset(0 ${trimRight}% 0 ${trimLeft}%);`">
+      <div class="is-success">
+        <progress
+          :value="`${currentTime / duration}`"
+          max="1"
+          id="progressBar"
+          ref="progressbar"
+          class="progress is-dark"
+          v-on:click="handleSeeking"
         />
+
         <div
-          class="cursor"
-          id="end"
-          ref="endcursor"
-          draggable="true"
-          v-on:dragstart="handleCursor"
-          v-on:dragend="handleCursor"
-          v-on:drag="handleCursor"
-          v-on:touchmove="handleCursor"
-        />
+          class="cursors"
+          ref="cursors"
+        >
+          <div
+            class="cursor"
+            id="begin"
+            ref="begincursor"
+            v-draggabilly="{axis: 'x'}"
+            v-draggabilly-on:pointerDown="handleDrag"
+            v-draggabilly-on:pointerMove="handleDrag"
+
+          />
+          <div
+            class="cursor"
+            id="end"
+            ref="endcursor"
+            v-draggabilly="{axis: 'x'}"
+            v-draggabilly-on:pointerDown="handleDrag"
+            v-draggabilly-on:pointerMove="handleDrag"
+
+          />
+        </div>
       </div>
     </div>
     <div
@@ -85,12 +86,14 @@ export default {
       frameRates: [0.25, 0.5, .75, 1, 1.25, 1.5, 1.75, 2],
       frameRate: 3,
       isPaused: true,
-      trimRight: null,
-      trimLeft: null,
+      trimRight: 0,
+      trimLeft: 0,
       isTrimming: false,
       offsetStart: 0,
       offsetEnd: 0,
-      isLooping: true
+      isLooping: true,
+      right: 0,
+      left: 0
     }
   },
   computed: {
@@ -117,6 +120,15 @@ export default {
     console.log('created')
   },
   methods: {
+    handleDrag (e, ptr) {
+      console.log('ello')
+      console.log(e, ptr)
+      console.log(e.x, e.clientX, ptr.x, ptr.clientX, ptr.pageX)
+      console.log('0self',e.target.getBoundingClientRect().right, '1them',e.target.parentElement.getBoundingClientRect().right)
+      let begin = (e.target.id === 'begin')
+      console.log(begin)
+      let pos
+    },
     handleEnd (e) {
       console.log('handleEnd()', e)
       if (this.isTrimming && this.trimLeft) {
@@ -132,29 +144,33 @@ export default {
       console.log('handleCursor()', e, e.target)
       if (!this.isTrimming) { return ; }
       let begin = (e.target.id === 'begin')
+      console.log(begin)
       let pos
-      if (e.type === 'drag' || e.type === 'dragend') {
-        pos = `${e.x}px`
-      } else if (e.type === 'touchmove') {
-        console.log('touchmove')
-        pos = `${Math.max(e.touches[0].clientX, 0)}px`
-      } else { return ;}
 
-      if (begin) {
-        e.target.style.left = pos
-        this.trimLeft = pos
-        console.log(e.target.getBoundingClientRect())
-        this.offsetStart =
-            (this.duration) *
-            (this.trimLeft.slice(0, -2) / e.target.parentElement.getBoundingClientRect().right)
-      } else {
-        e.target.style.left = pos
-        this.trimRight = pos
-        console.log(e.target.getBoundingClientRect())
-        this.offsetEnd =
-            (this.duration) *
-            (this.trimRight.slice(0, -2) / e.target.parentElement.getBoundingClientRect().right)
-      }
+      console.log(pos)
+      // if (e.type === 'drag' || e.type === 'dragend') {
+      //   pos = `${e.x}px`
+      //   console.log('---------------------------------',pos, e)
+      // } else if (e.type === 'touchmove') {
+      //   console.log('touchmove')
+      //   pos = `${Math.max(e.touches[0].clientX, 0)}px`
+      // } else { return ;}
+      // console.log('-pay attention', pos, e)
+      // if (begin) {
+      //   e.target.style.left = pos
+      //   this.trimLeft = pos
+      //   console.log(e.target.getBoundingClientRect())
+      //   this.offsetStart =
+      //       (this.duration) *
+      //       (this.trimLeft.slice(0, -2) / e.target.parentElement.getBoundingClientRect().right)
+      // } else {
+      //   e.target.style.right = pos
+      //   this.trimRight = pos
+      //   console.log(e.target.getBoundingClientRect())
+      //   this.offsetEnd =
+      //       (this.duration) *
+      //       (this.trimRight.slice(0, -2) / e.target.parentElement.getBoundingClientRect().right)
+      // }
     },
     toggleTrim () {
       this.$refs.cursors.style.visibility = ((this.isTrimming = !this.isTrimming))
@@ -283,40 +299,37 @@ export default {
 
 #videoControls {
   position: absolute;
-  object-fit: contain;
-  display: initial;
+  /* clip-path: inset(0 5% 0 40%); */
+  overflow: hidden;
   top: 0;
   width: 100%;
 }
-.cursors {
-  display: flex;
-  width: 100%;
-  visibility: hidden;;
-}
-
 .cursor {
   position: absolute;
-  display: flex;
   border-radius: 5px;
   background-color: red;
   height: 35px;
   width: 5px;
   z-index: 6;
 }
+
+.cursors {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  visibility: hidden;;
+}
 #end {
   right: 0px;
 }
 
-#begin {
-  left: 0px;
-}
-
 #progressBar {
-  position: absolute;
   height: 35px;
   z-index: 5;
   width: 100%;
   align-self: center;
+  object-fit: contain;
 }
 
 
@@ -325,15 +338,6 @@ export default {
   z-index: 6;
   top: 0;
   color: red;
-}
-
-#icon-arrow-right {
-  cursor: move;
-  left: 0;
-}
-
-#icon-arrow-left {
-  left: 100%;
 }
 
 #frameRate {

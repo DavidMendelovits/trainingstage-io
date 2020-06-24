@@ -2,8 +2,9 @@
   <div>
     <SiteHero />
     <!-- <InstaEmbed hideCaption url="https://www.instagram.com/p/CBWIdLoHplg/" /> -->
-    <YoutubeEmbed />
-    </div>
+    <Video :link="inputString"/>
+    <Player style="width: 50%;"/>
+  </div>
 </template>
 
 <script>
@@ -15,7 +16,7 @@ export default {
   },
   data () {
     return {
-
+      inputString: 'https://gfycat.com/tidyalarminggoldfish'
     }
   }
 }
