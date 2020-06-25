@@ -3,7 +3,7 @@
     <SiteHero />
     <!-- <InstaEmbed hideCaption url="https://www.instagram.com/p/CBWIdLoHplg/" /> -->
     <Video :link="inputString"/>
-    <Player style="width: 50%;"/>
+    <Stage />
   </div>
 </template>
 

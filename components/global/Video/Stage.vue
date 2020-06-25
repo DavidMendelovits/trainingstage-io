@@ -27,7 +27,6 @@
         ref="stage"
       >
         <Player
-          :src="entries[0]"
           class="column"
           ref="left"
           id="left"

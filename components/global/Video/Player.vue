@@ -12,10 +12,11 @@
       :src="src"
       type="video/mp4"
     />
-    <div id="videoControls" class="controls" :style="`clip-path:inset(0 ${trimRight}% 0 ${trimLeft}%);`">
+    <div id="videoControls" class="controls" >
       <div class="is-success">
         <progress
           :value="`${currentTime / duration}`"
+          :style="`clip-path:inset(0 ${trimRight}% 0 ${trimLeft}%);`"
           max="1"
           id="progressBar"
           ref="progressbar"
@@ -31,18 +32,18 @@
             class="cursor"
             id="begin"
             ref="begincursor"
-            v-draggabilly="{axis: 'x'}"
-            v-draggabilly-on:pointerDown="handleDrag"
-            v-draggabilly-on:pointerMove="handleDrag"
+            v-draggabilly="{axis: 'x', containment: true}"
+            v-draggabilly-on:pointerDown="handleStartCursor"
+            v-draggabilly-on:pointerMove="handleStartCursor"
 
           />
           <div
             class="cursor"
             id="end"
             ref="endcursor"
-            v-draggabilly="{axis: 'x'}"
-            v-draggabilly-on:pointerDown="handleDrag"
-            v-draggabilly-on:pointerMove="handleDrag"
+            v-draggabilly="{axis: 'x', containment: true}"
+            v-draggabilly-on:pointerDown="handleEndCursor"
+            v-draggabilly-on:pointerMove="handleEndCursor"
 
           />
         </div>
@@ -120,14 +121,29 @@ export default {
     console.log('created')
   },
   methods: {
-    handleDrag (e, ptr) {
-      console.log('ello')
-      console.log(e, ptr)
-      console.log(e.x, e.clientX, ptr.x, ptr.clientX, ptr.pageX)
-      console.log('0self',e.target.getBoundingClientRect().right, '1them',e.target.parentElement.getBoundingClientRect().right)
-      let begin = (e.target.id === 'begin')
-      console.log(begin)
-      let pos
+    handleStartCursor (e, ptr) {
+      console.log('startCursor', e, ptr)
+      console.log(e.x, ptr.x)
+      this.trimLeft =
+        `${(100 * (e.x / e.target.parentElement.getBoundingClientRect().right) - 1)}`
+        console.log(this.trimLeft)
+      this.offsetStart =
+        (this.duration) *
+        (this.trimLeft / 100)
+
+    },
+    handleEndCursor (e, ptr) {
+      console.log('endcursor', e, ptr)
+      console.log(e.x, ptr.x)
+      const bound = e.target.parentElement.getBoundingClientRect()
+      console.log(bound)
+      if (e.target.id != 'end') { return }
+      this.trimRight =
+        `${100 - (100 * (e.x / e.target.parentElement.getBoundingClientRect().right))}`
+      console.log(this.trimRight)
+      this.offsetEnd =
+        (this.duration) *
+        (this.trimRight / 100)
     },
     handleEnd (e) {
       console.log('handleEnd()', e)
@@ -140,45 +156,15 @@ export default {
         this.togglePlayPause()
       }
     },
-    handleCursor (e) {
-      console.log('handleCursor()', e, e.target)
-      if (!this.isTrimming) { return ; }
-      let begin = (e.target.id === 'begin')
-      console.log(begin)
-      let pos
-
-      console.log(pos)
-      // if (e.type === 'drag' || e.type === 'dragend') {
-      //   pos = `${e.x}px`
-      //   console.log('---------------------------------',pos, e)
-      // } else if (e.type === 'touchmove') {
-      //   console.log('touchmove')
-      //   pos = `${Math.max(e.touches[0].clientX, 0)}px`
-      // } else { return ;}
-      // console.log('-pay attention', pos, e)
-      // if (begin) {
-      //   e.target.style.left = pos
-      //   this.trimLeft = pos
-      //   console.log(e.target.getBoundingClientRect())
-      //   this.offsetStart =
-      //       (this.duration) *
-      //       (this.trimLeft.slice(0, -2) / e.target.parentElement.getBoundingClientRect().right)
-      // } else {
-      //   e.target.style.right = pos
-      //   this.trimRight = pos
-      //   console.log(e.target.getBoundingClientRect())
-      //   this.offsetEnd =
-      //       (this.duration) *
-      //       (this.trimRight.slice(0, -2) / e.target.parentElement.getBoundingClientRect().right)
-      // }
-    },
     toggleTrim () {
       this.$refs.cursors.style.visibility = ((this.isTrimming = !this.isTrimming))
                                           ? 'visible'
                                           : 'hidden'
       if (!this.isTrimming) {
-        //this.trimLeft = null
-        //this.trimRight = null
+        this.trimLeft = 0
+        this.trimRight = 0
+        this.offsetEnd = 0
+        this.offsetStart = 0
       }
     },
     handleUtil (e, util) {
@@ -211,7 +197,7 @@ export default {
       this.currentTime = e.target.currentTime
       console.log(this.offsetStart,this.offsetEnd)
       if ((!(this.trimRight)) || !(this.isTrimming)) { return ; }
-      if (!(this.currentTime <= this.offsetEnd)) {
+      if (!(this.currentTime <= (this.duration - this.offsetEnd))) {
         this.$refs.player.currentTime = this.offsetStart
       }
 
@@ -304,24 +290,26 @@ export default {
   top: 0;
   width: 100%;
 }
-.cursor {
+
+.cursors {
   position: absolute;
+  display: flex;
+  top: 0;
+  width: 100%;
+  height: 35px;
+  visibility: hidden;
+}
+.cursor {
   border-radius: 5px;
   background-color: red;
   height: 35px;
   width: 5px;
   z-index: 6;
 }
-
-.cursors {
-  position: absolute;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  visibility: hidden;;
-}
 #end {
-  right: 0px;
+  align-self: right;
+  right: 0;
+  top: 0;
 }
 
 #progressBar {
@@ -329,6 +317,7 @@ export default {
   z-index: 5;
   width: 100%;
   align-self: center;
+  background-color: aqua;
   object-fit: contain;
 }
 
