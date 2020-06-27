@@ -13,7 +13,14 @@
         </div>
       </div>
       <div class="level-right">
-        right
+        <div class="level-item tag is-large">
+          <button class="button">
+            <span class="icon" v-on:click="toggleSplit">
+              <i v-show="!this.split" class="icon-frame" />
+              <i class="icon-frame" />
+            </span>
+          </button>
+        </div>
       </div>
     </nav>
   </div>
@@ -23,6 +30,8 @@
 export default {
   data () {
     return {
+      split: false,
+      frame: 'icon-frame',
       split: false
     }
   },
@@ -30,7 +39,11 @@ export default {
     promptUserInput () {
       console.log('promptUserInput()')
       this.$emit('paperclick')
-    }
+    },
+    toggleSplit () {
+      if (!(this.split = !this.split)) {
+      }
+    },
   }
 }
 </script>

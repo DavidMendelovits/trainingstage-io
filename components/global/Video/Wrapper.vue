@@ -1,16 +1,19 @@
 <template>
   <div @drop.prevent="updateSourceVid" @dragover.prevent>
     <WrapperToolbar v-on:paperclick="togglePaperclip"/>
-    <WrapperInput :active="paperclip" v-on:input="handleLink" />
+    <WrapperInput :active="paperclip" v-on:input="handleIn" />
     <Player
+      v-if="!embed"
       :src="source"
       :key="toggle"
     />
-    <Embed
-      v-if="embed"
-      :value="videoEmbed"
-      :key="!toggle"
-    />
+    <div v-if="embed">
+      <Embed
+        :value="videoEmbed"
+        :key="!toggle"
+      />
+    </div>
+
   </div>
 </template>
 
@@ -65,7 +68,28 @@ export default {
         this.gfyLink = linkInfo.link
       }
       this.toggle = (this.switch[(this.toggle + 1) % 1])
+    },
+    handleIn (data) {
+      console.log('handleIn()')
+      if (this.embed) {
+        console.log('hm')
+        this.embed = false
+        this.videoEmbed = null
+      }
+      if (data.link.slice(0, 4) === 'blob') {
+        console.log('a file!')
+        this.embed = false
+        this.fileBlob = data.link
+      } else if (data.embed) {
+        this.toggle = (this.switch[(this.toggle++ % 2)])
+        this.videoEmbed = data.link
+        this.embed = true
+      } else {
+        this.gfyLink = data.link
+        this.embed = false
+      }
     }
+
   }
 }
 </script>

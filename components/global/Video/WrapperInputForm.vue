@@ -57,6 +57,11 @@ export default {
           this.$store.commit('DELETE_VIDEO', 0)
         }
         this.$store.commit('PUSH_VIDEO', this.inputFile)
+        const output = {
+          'embed': false,
+          'link': this.inputFile
+        }
+        this.$emit('submitted', output)
       }
     },
     async parseLink (e) {
