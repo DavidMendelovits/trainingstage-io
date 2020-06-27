@@ -71,10 +71,7 @@
 <script>
 export default {
   props: {
-    entries: {
-      type: Object,
-      default: []
-    }
+
   },
   data () {
     return {

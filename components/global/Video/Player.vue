@@ -122,24 +122,28 @@ export default {
   },
   methods: {
     handleStartCursor (e, ptr) {
+      if (e.target.id != 'begin') { return }
       console.log('startCursor', e, ptr)
       console.log(e.x, ptr.x)
+      const parentBorder = ptr.target.parentElement.getBoundingClientRect()
+      const offset = ptr.x - parentBorder.left
       this.trimLeft =
-        `${(100 * (e.x / e.target.parentElement.getBoundingClientRect().right) - 1)}`
-        console.log(this.trimLeft)
+        `${(100 * (offset / parentBorder.width))}`
+      console.log(this.trimLeft)
       this.offsetStart =
         (this.duration) *
         (this.trimLeft / 100)
+      this.$refs.player.currentTime = this.offsetStart
 
     },
     handleEndCursor (e, ptr) {
+      if (e.target.id != 'end') { return }
       console.log('endcursor', e, ptr)
       console.log(e.x, ptr.x)
-      const bound = e.target.parentElement.getBoundingClientRect()
-      console.log(bound)
-      if (e.target.id != 'end') { return }
+      const parentBorder = ptr.target.parentElement.getBoundingClientRect()
+      const offset = ptr.x - parentBorder.left
       this.trimRight =
-        `${100 - (100 * (e.x / e.target.parentElement.getBoundingClientRect().right))}`
+        `${(100 - (100 * (offset / parentBorder.width)))}`
       console.log(this.trimRight)
       this.offsetEnd =
         (this.duration) *
@@ -148,11 +152,7 @@ export default {
     handleEnd (e) {
       console.log('handleEnd()', e)
       if (this.isTrimming && this.trimLeft) {
-        const borderInfo = e.target.getBoundingClientRect()
-        console.log(this.trimLeft.slice(0, -2), borderInfo)
-        let newval = (this.duration) * (this.trimLeft.slice(0, -2) / borderInfo.right)
-        console.log(newval)
-        this.$refs.player.currentTime = newval
+        this.$refs.player.currentTime = this.offsetStart
         this.togglePlayPause()
       }
     },
@@ -275,7 +275,6 @@ export default {
 .videoContainer {
   position: relative;
   display: flex;
-  flex-direction: column;
 }
 
 
@@ -306,9 +305,13 @@ export default {
   width: 5px;
   z-index: 6;
 }
+
+#begin {
+  left: 2%
+}
+
 #end {
-  align-self: right;
-  right: 0;
+  left: 97.5%;
   top: 0;
 }
 
@@ -316,7 +319,6 @@ export default {
   height: 35px;
   z-index: 5;
   width: 100%;
-  align-self: center;
   background-color: aqua;
   object-fit: contain;
 }

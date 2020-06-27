@@ -1,5 +1,6 @@
 export const state = () => ({
-  userVideo: []
+  userVideo: [],
+  inputModal: false
 })
 
 export const mutations = {
@@ -7,7 +8,10 @@ export const mutations = {
     state.userVideo.push(blob)
   },
   DELETE_VIDEO(state, index) {
-    state.userVideo.splice(i, 1)
+    state.userVideo.splice(index, 1)
+  },
+  TOGGLE_INPUT(state) {
+    state.inputModal = !(state.inputModal)
   }
 }
 
