@@ -40,6 +40,7 @@ export default {
     getInput (data) {
       console.log('getInput()', data)
       this.$emit('input', data)
+      this.exit()
     }
   }
 }

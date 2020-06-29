@@ -2,8 +2,9 @@
   <div>
     <SiteHero />
     <!-- <InstaEmbed hideCaption url="https://www.instagram.com/p/CBWIdLoHplg/" /> -->
-    <Video :link="inputString"/>
-    <Stage />
+    <!-- <Video :link="inputString"/> -->
+    <!-- <Stage /> -->
+    <Video />
   </div>
 </template>
 

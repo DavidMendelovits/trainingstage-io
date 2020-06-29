@@ -1,6 +1,7 @@
 <template>
   <div>
-    <Wrapper :videoSource="string"/>
+    <!-- <Wrapper :videoSource="string"/> -->
+    <Video />
   </div>
 </template>
 

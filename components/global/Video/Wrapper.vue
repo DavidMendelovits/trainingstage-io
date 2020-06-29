@@ -28,7 +28,6 @@ export default {
       fileBlob: null,
       switch: [0, 1],
       toggle: 0,
-      paperclip: false,
       videoEmbed: null,
       embed: false,
       gfyLink: null
@@ -37,6 +36,9 @@ export default {
   computed: {
     source () {
       return (this.fileBlob || this.gfyLink || this.videoSource)
+    },
+    paperclip () {
+      return this.$store.state.inputModal
     }
   },
   methods: {
@@ -54,8 +56,8 @@ export default {
     },
     togglePaperclip () {
       console.log('togglePaperclip')
-      this.paperclip = !this.paperclip
-      this.$store.commit('TOGGLE_INPUT')
+      // this.paperclip = !this.paperclip
+      // this.$store.commit('TOGGLE_INPUT')
     },
     handleLink (linkInfo) {
       console.log('handleLink()', linkInfo)

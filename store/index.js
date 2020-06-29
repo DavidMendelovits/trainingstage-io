@@ -1,6 +1,7 @@
 export const state = () => ({
   userVideo: [],
-  inputModal: false
+  inputModal: false,
+  split: false
 })
 
 export const mutations = {
@@ -12,6 +13,9 @@ export const mutations = {
   },
   TOGGLE_INPUT(state) {
     state.inputModal = !(state.inputModal)
+  },
+  TOGGLE_SPLIT(state) {
+    state.split = !(state.split)
   }
 }
 

@@ -1,19 +1,6 @@
 <template>
   <nav class="level is-mobile">
     <div class="level-left">
-      <div class="level-item control">
-        <input
-          class="input"
-          type="text"
-          placeholder="Paste a link here (youtube, vimeo, etc)"
-          v-model="inputLink"
-        >
-        <button class="button" @click="parseLink">
-          <label class="label">
-            submit
-          </label>
-        </button>
-      </div>
     </div>
     <div class="level-right">
       <label class="file-label">
