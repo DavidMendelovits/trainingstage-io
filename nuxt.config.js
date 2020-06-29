@@ -38,6 +38,7 @@ export default {
   ** Nuxt.js dev-modules
   */
   buildModules: [
+    'nuxt-composition-api'
   ],
   /*
   ** Nuxt.js modules
@@ -74,6 +75,9 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
+  },
+  generate: {
+    interval: 2000
   },
   // generate: {
   //   routes: function () {
