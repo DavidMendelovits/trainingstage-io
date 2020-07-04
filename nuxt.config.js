@@ -48,6 +48,7 @@ export default {
     '@nuxtjs/bulma',
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
+    '@nuxtjs/auth',
     '@nuxtjs/pwa',
     // Doc: https://github.com/nuxt-community/dotenv-module
     '@nuxtjs/dotenv',
@@ -75,6 +76,12 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
+  },
+  publicRuntimeConfig: {
+    client_id: process.env.CLIENT_ID
+  },
+  privateRuntimeConfig: {
+    client_secret: process.env.CLIENT_SECRET
   },
   generate: {
     interval: 2000
