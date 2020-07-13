@@ -1,6 +1,6 @@
 <template>
-  <footer>
-    <div class="">
+  <footer class="footer">
+    <div class="container">
       <div class="columns is-mobile">
         <div class="column">
           <div class="box content">

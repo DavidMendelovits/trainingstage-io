@@ -2,6 +2,7 @@
   <div>
     <Bar />
     <nuxt />
+    <Footer />
   </div>
 </template>
 

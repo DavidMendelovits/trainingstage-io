@@ -176,7 +176,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .videoContainer {
   width: 100%;
   position: relative;

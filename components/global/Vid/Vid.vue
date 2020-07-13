@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div class="parent">
     <div class="columns">
       <div class="column">
         <Wrapper />
@@ -32,3 +32,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.parent {
+  position: relative;
+}
+</style>
