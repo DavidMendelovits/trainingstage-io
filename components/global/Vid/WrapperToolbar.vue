@@ -16,7 +16,7 @@
         <div class="level-item tag is-large">
           <button class="button" v-on:click="toggleSplit">
             <span class="icon" >
-              <i v-show="!this.split" class="icon-frame" />
+              <i v-show="!state.split" class="icon-frame" />
               <i class="icon-frame" />
             </span>
           </button>
@@ -27,28 +27,38 @@
 </template>
 
 <script>
+import { ref, computed, reactive } from '@vue/composition-api'
+import { useContext } from 'nuxt-composition-api'
 export default {
-  data () {
-    return {
+  props: {
+  },
+  setup (props, {emit}) {
+    const state = reactive({
       split: false,
-      frame: 'icon-frame',
-      split: false
+      frame: 'icon-frame'
+    })
+    const { store } = useContext()
+
+    const promptUserInput = () => {
+      console.log('promptuserInput')
+      emit('paperclip')
+      store.commit('TOGGLE_INPUT')
+    }
+    const toggleSplit = () => {
+      if (!(state.split = !state.split)) {
+
+      } else {
+
+      }
+    }
+
+    return {
+      state,
+      promptUserInput,
+      toggleSplit
     }
   },
   methods: {
-    promptUserInput () {
-      console.log('promptUserInput()')
-      this.$emit('paperclick')
-      this.$store.commit('TOGGLE_INPUT')
-    },
-    toggleSplit () {
-      if (!(this.split = !this.split)) {
-
-      } else {
-        this.$emit('split')
-        this.$store.commit('TOGGLE_SPLIT')
-      }
-    },
   }
 }
 </script>

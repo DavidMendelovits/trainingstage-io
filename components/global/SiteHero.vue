@@ -4,10 +4,10 @@
     <div class="hero-body">
       <div class="container">
         <h1 class="title">
-          Hero Image
+          Training Stage
         </h1>
         <h3 class="subtitle">
-          without CSS background-image
+          Train Like the World is Watching
         </h3>
       </div>
     </div>

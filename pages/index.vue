@@ -1,10 +1,15 @@
 <template>
   <div>
     <SiteHero />
+    <Tip
+      header="testing header"
+      body="testing body"
+    />
     <!-- <InstaEmbed hideCaption url="https://www.instagram.com/p/CBWIdLoHplg/" /> -->
     <!-- <Video :link="inputString"/> -->
     <!-- <Stage /> -->
-    <Video />
+    <!-- <Video /> -->
+    <Vid />
   </div>
 </template>
 

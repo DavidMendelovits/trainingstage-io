@@ -19,7 +19,7 @@ export default {
     console.log('setup')
     const makeLink = (baseURL, clientID, state, redirect) => {
       const scope = '&scope=all'
-      const responseType = '&response_type=token'
+      const responseType = '&response_type=code'
       return `${baseURL}${clientID}${scope}${state}${responseType}${redirect}`
     }
     const ctx = useContext()

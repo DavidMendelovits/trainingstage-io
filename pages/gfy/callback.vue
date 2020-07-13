@@ -1,23 +1,37 @@
 <template>
   <div class="container">
-    {{ path }}
+    <!-- {{ path }} -->
   </div>
 </template>
 
 <script>
-import { useContext } from 'nuxt-composition-api'
+import { useContext, useAsync } from 'nuxt-composition-api'
 import { onMounted, ref, computed, reactive } from '@vue/composition-api'
+import axios from 'axios'
 export default {
   setup () {
-    const {route} = useContext()
-    console.log(route)
-    const path = ref(computed(() => {
-      return route.value.fullPath
-    }))
+    const ctx = useContext()
+    console.log(ctx.route.value)
+
+    const {code, state} = ctx.query.value
+    const axios = ctx.$axios
+    const ip = useAsync(() => axios.get('https://www.icanhazip.com'))
     return {
-      route,
-      path
+      code,
+      state,
+      ip
     }
+  },
+  async asyncData ({$axios, $config, route, params}) {
+    // const { code, state } = params
+    // const test = params.code
+    return {
+      // code,
+      // state,
+      // test
+    }
+  },
+  methods: {
   }
 }
 </script>

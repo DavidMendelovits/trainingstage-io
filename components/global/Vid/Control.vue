@@ -1,7 +1,7 @@
 <template>
   <div class="controls">
     <div id="videoControls" class="controls" >
-      <div>
+      <div class="seeker">
         <progress
           :value="`${currentTime / duration}`"
           :style="`clip-path:inset(0 ${state.trimRight}% 0 ${state.trimLeft}%);`"
@@ -33,23 +33,29 @@
       <div
         class="zones"
         @click="handleTouch($event, player, state)"
-      >
-      <!-- <span id="play" class="icon">
-        <i class="icon-control-play" style="height: 35px;width: 35px;"/>
-      </span> -->
+      />
+    </div>
+    <div id="utilities" class="level is-mobile">
+      <div class="level-left">
+        <div id="mirror" class="level-item">
+          <button @click="mirror" class="tag is-medium">
+            <span class="icon is-medium">
+              <i class="icon-refresh"/>
+            </span>
+            Mirror
+          </button>
+        </div>
       </div>
-      <div class="level is-mobile">
-        <div id="util" class="level-right">
-          <div class="level-item">
-            <span class="icon is-medium" @click="toggleTrim">
-              <i class="icon-film" />
-            </span>
-          </div>
-          <div class="level-item">
-            <span>
-              {{ currentTime.toFixed(2) }}
-            </span>
-          </div>
+      <div class="level-right">
+        <div id="cut" class="level-item">
+          <span class="icon is-medium" @click="toggleTrim">
+            <i class="icon-film" />
+          </span>
+          <span>
+            {{ currentTime.toFixed(2) }}
+          </span>
+        </div>
+        <div class="level-item">
         </div>
       </div>
     </div>
@@ -119,6 +125,9 @@ export default {
         emit('off')
       } else { emit('on')}
     }
+    const mirror = () => {
+      emit('mirror')
+    }
 
     const handleTimeUpdate = (e) => {
       console.log('about to travel through time')
@@ -148,7 +157,8 @@ export default {
       handleEndCursor,
       cursors,
       toggleTrim,
-      handleTimeUpdate
+      handleTimeUpdate,
+      mirror
     }
   }
 }
@@ -161,13 +171,22 @@ export default {
   width: 100%;
   height: 100%;
 }
+
 .zones {
   height: 100%;
+  position: relative;
+  top: 0;
+  z-index: 4;
+  display:flex;
 }
 
 #progressBar {
   height: 35px;
+  position: absolute;
   object-fit: contain;
+  z-index: 5;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 .cursors {
@@ -175,6 +194,7 @@ export default {
   display: flex;
   top: 0;
   width: 100%;
+  z-index: 5;
   height: 35px;
   visibility: hidden;
 }
@@ -184,7 +204,7 @@ export default {
   background-color: red;
   height: 35px;
   width: 5px;
-  z-index: 6;
+  z-index: 5;
 }
 
 #begin {
@@ -203,6 +223,7 @@ export default {
   justify-content: center;
 }
 #util {
+  z-index: 6;
   position: absolute;
   top: 90%;
   height: 8.7777%;
@@ -210,5 +231,27 @@ export default {
   color: white;
   background-color: black;
   border-radius: 10px;
+}
+
+#cut {
+  background-color: black;
+  color: white;
+  border-radius: 10px;
+  height: 8.77%;
+}
+
+#mirror {
+  height: 8.7777%;
+  background-color: black;
+  color: white;
+  border-radius: 10px;
+}
+
+#utilities {
+  position: absolute;
+  top: 90%;
+  width: 100%;
+  position: absolute;
+  z-index: 6;
 }
 </style>

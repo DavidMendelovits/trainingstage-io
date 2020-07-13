@@ -18,6 +18,9 @@
 </template>
 
 <script>
+import { useContext } from 'nuxt-composition-api'
+import { ref, computed, reactive } from '@vue/composition-api'
+
 export default {
   props: {
     active: {
@@ -25,22 +28,24 @@ export default {
       default: false
     }
   },
-  computed: {
-    promptStatus () {
-      return (this.$store.state.inputModal)
+  setup (props, { emit }) {
+    const { store } = useContext()
+    const promptStatus = computed(() => {
+      return (store.state.inputModal)
       ? 'is-active'
       : ''
+    })
+    const exit = (e) => {
+      store.commit('TOGGLE_INPUT')
     }
-  },
-  methods: {
-    exit (e) {
-      console.log('touchBackground()', e)
-      this.$store.commit('TOGGLE_INPUT')
-    },
-    getInput (data) {
-      console.log('getInput()', data)
-      this.$emit('input', data)
-      this.exit()
+    const getInput = (data) => {
+      emit('input', data)
+      exit()
+    }
+    return {
+      promptStatus,
+      exit,
+      getInput
     }
   }
 }

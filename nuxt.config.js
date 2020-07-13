@@ -57,6 +57,17 @@ export default {
     '@nuxt/components',
     '@nuxt/content'
   ],
+  auth: {
+    // strategies: {
+    //   social: {
+    //     _scheme: 'oauth2',
+    //     authorization_endpoint: 'https://api.gfycat.com/v1/oauth/token',
+    //     userinfo_endpoint: false,
+    //     scope: 'all',
+    //     access_type:
+    //   }
+    // }
+  },
   components: [
     {
       path: '~/components/global',

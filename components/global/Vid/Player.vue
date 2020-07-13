@@ -1,15 +1,16 @@
 <template>
   <div class="videoContainer">
     <video
-      :src="state.src"
+      :src="src"
       id="player"
       class="video"
       ref="player"
       @loadedmetadata="loadMetaData"
       @timeupdate="handleTimeUpdate"
       type="video/mp4"
+      :style="mirrorTransform"
     />
-    <Controls
+    <Control
       ref="controls"
       class="controls"
       :player="player"
@@ -18,6 +19,7 @@
       @crop="adjust"
       @on="trimOn"
       @off="trimOff"
+      @mirror="toggleMirror"
     />
   </div>
 </template>
@@ -27,7 +29,12 @@ import { onMounted, ref, computed, reactive } from '@vue/composition-api'
 // import { useContext } from 'nuxt-composition-api'
 
 export default {
-  setup () {
+  props: {
+    src: {
+      default: 'backflip.mp4'
+    }
+  },
+  setup (props) {
     //setup
     const player = ref(null)
     onMounted(() => {
@@ -41,7 +48,7 @@ export default {
     // console.log(controls.value)
 
     const state = reactive({
-      src: 'default.mp4',
+      src: props.src,
       duration: 0,
       currentTime: 0,
       frame: (1/22),
@@ -55,8 +62,25 @@ export default {
       offsetEnd: 0,
       isLooping: true,
       right: 0,
-      left: 0
+      left: 0,
+      mirror: false
     })
+
+    const toggleMirror = () => {
+      console.log('toggleMirror')
+      state.mirror = !state.mirror
+    }
+
+    const mirrorTransform = (computed(() => {
+      const transform = `
+        transform: rotateY(180deg);
+      -webkit-transform:rotateY(180deg); /* Safari and Chrome */
+      -moz-transform:rotateY(180deg);
+      `
+      return (state.mirror)
+              ? transform
+              : ''
+    }))
 
     const trimOff = () => {
       state.isTrimming = false
@@ -157,7 +181,9 @@ export default {
       loadMetaData,
       adjust,
       trimOn,
-      trimOff
+      trimOff,
+      mirrorTransform,
+      toggleMirror
     }
   }
 }
