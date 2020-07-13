@@ -4,15 +4,25 @@
       <div class="level-left">
         <!-- <div class="level-item">
           <WrapperToolbarButton icon="icon-rocket" />
-        </div>
-        <div class="level-item">
-          <WrapperToolbarButton icon="icon-reload" />
         </div> -->
+
         <div class="level-item" @click="overlayInstructions">
           <WrapperToolbarButton icon="icon-question" />
         </div>
         <div class="level-item" @click="promptUserInput">
           <WrapperToolbarButton icon="icon-paper-clip" />
+        </div>
+          <div class="level-item">
+            <span class="tag is-medium" @click="changeSpeed('slow')">
+              -
+            </span>
+            <span class="icon is-medium">
+              <i class="icon-speedometer"></i>
+              {{ frameRate }}
+            </span>
+            <span class="tag is-medium" @click="changeSpeed('fast')">
+              +
+            </span>
         </div>
       </div>
       <div class="level-right">
@@ -34,6 +44,10 @@ import { ref, computed, reactive } from '@vue/composition-api'
 import { useContext } from 'nuxt-composition-api'
 export default {
   props: {
+    frameRate: {
+      type: Number,
+      default: 1
+    }
   },
   setup (props, {emit}) {
     const state = reactive({
@@ -42,6 +56,9 @@ export default {
     })
     const { store } = useContext()
 
+    const changeSpeed = (to) => {
+      emit('change', to)
+    }
     const promptUserInput = () => {
       console.log('promptuserInput')
       emit('paperclip')
@@ -66,7 +83,8 @@ export default {
       state,
       promptUserInput,
       toggleSplit,
-      overlayInstructions
+      overlayInstructions,
+      changeSpeed
     }
   },
   methods: {

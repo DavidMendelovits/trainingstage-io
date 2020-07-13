@@ -63,9 +63,9 @@
 </template>
 
 <script>
-import { onMounted, ref, computed, reactive } from '@vue/composition-api'
+import { onMounted, onUpdated, ref, computed, reactive, watch, watchEffect } from '@vue/composition-api'
 import {
-  play, pause, togglePlayPause, handleTouch, getZone, setTime, seekForward, seekBackward
+  play, pause, togglePlayPause, handleTouch, getZone, setTime, seekForward, seekBackward, setPlaybackRate
 } from './utils'
 
 export default {
@@ -74,14 +74,21 @@ export default {
       required: true
     },
     duration: Number,
-    currentTime: Number
+    currentTime: Number,
+    playbackRate: Number
   },
   setup(props, { emit }) {
     const cursors = ref(null)
     onMounted(() => {
       console.log(cursors.value)
     })
+    // watchEffect(() => props.playbackRate, (playbackRate, old) => {
+    //   console.log('watching', old, playbackRate)
+    // })
 
+    onUpdated(() => {
+      setPlaybackRate(props.player, props.playbackRate)
+    })
     const handleSeeking = (e) => {
       const face = (e.touches) ? e.touches[0] : e
       const videoBorderInfo = e.target.getBoundingClientRect()

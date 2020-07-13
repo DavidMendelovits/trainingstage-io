@@ -18,6 +18,7 @@
       :player="player"
       :duration="state.duration"
       :currentTime="state.currentTime"
+      :playbackRate="frameRate"
       @crop="adjust"
       @on="trimOn"
       @off="trimOff"
@@ -28,13 +29,17 @@
 </template>
 
 <script>
-import { onMounted, ref, computed, reactive } from '@vue/composition-api'
+import { onMounted, ref, computed, reactive, watchEffect } from '@vue/composition-api'
 import { useContext } from 'nuxt-composition-api'
 
 export default {
   props: {
     src: {
       default: 'backflip.mp4'
+    },
+    frameRate: {
+      default: 1,
+      type: Number
     }
   },
   setup (props) {
@@ -43,6 +48,8 @@ export default {
     onMounted(() => {
       console.log('player', player)
     })
+
+
     const controls = ref(null)
     onMounted(() => {
       console.log('controls', controls)

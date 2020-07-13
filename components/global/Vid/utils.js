@@ -27,6 +27,9 @@ export const setTime = (player, to) => {
   player.currentTime = to
 }
 
+export const setPlaybackRate = (player, to) => {
+  player.playbackRate = to
+}
 
 export const getZone = (middleX, middleY, inX, inY) => {
   if (Math.abs(inX - middleX) <= 40 && Math.abs(inY - middleY) <= 40) {

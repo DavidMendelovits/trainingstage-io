@@ -1,8 +1,10 @@
 <template>
   <div @drop.prevent="updateSourceVid" @dragover.prevent>
     <WrapperToolbar
+      :frameRate="frameRate"
       @paperclip="toggleInput"
       @question="toggleInstructions"
+      @change="changeSpeed"
     />
     <WrapperInput
       v-show="state.paperclip"
@@ -19,6 +21,7 @@
       <Player
         class="p"
         v-if="!state.embed"
+        :frameRate="frameRate"
         :src="source"
         :key="state.toggle"
       />
@@ -58,7 +61,13 @@ export default {
       toggle: 0,
       switch: [0, 1],
       paperclip: false,
-      instructions: false
+      instructions: false,
+      frameRates: [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2],
+      frameRate: 3
+    })
+
+    const frameRate = computed(() => {
+      return state.frameRates[state.frameRate]
     })
 
     const source = ref(computed(() => {
@@ -108,13 +117,23 @@ export default {
       state.toggle = (state.switch[(state.toggle + 1) % 1])
     }
 
+    const changeSpeed = (to) => {
+      console.log('changing speed...', to)
+      if (to === 'slow' && state.frameRate > 0) {
+        state.frameRate -= 1
+      } else if (to === 'fast' && state.frameRate < 7) {
+        state.frameRate += 1
+      }
+    }
     return {
       state,
       updateSourceVid,
       source,
       toggleInput,
       handleIn,
-      toggleInstructions
+      toggleInstructions,
+      frameRate,
+      changeSpeed
     }
   }
 }
