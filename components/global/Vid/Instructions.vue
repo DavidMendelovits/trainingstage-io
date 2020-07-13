@@ -1,7 +1,7 @@
 <template>
   <div class="parent" @click="cycleThrough">
     <div class="instruction">
-      <figure class="instruction image is-centered is-128x128" :id="`${step}`">
+      <figure class="instruction image is-centered is-half is-1by1" :id="`${step}`">
         <img :src="`instructions/${step}.png`" :class="`has-ratio`">
       </figure>
     </div>
@@ -15,19 +15,22 @@ export default {
     needed: {
     }
   },
-  setup (props) {
+  setup (props, { emit }) {
     const state = reactive({
       step: 0,
-      steps: ['playpause', 'leftward', 'rightward'],
+      steps: ['mid', 'leftward', 'rightward'],
       focus: 'playpause',
       directions: ['container', 'level-left', 'level-right']
     })
     const { store } = useContext()
     const cycleThrough = () => {
-      state.step = (state.step + 1) % 3
-      if (state.step === 0) {
+      if (state.step === 2) {
+        console.log('hello peopl of earth')
         store.commit('TOGGLE_INSTRUCTION')
+        emit('exit')
       }
+      state.step = (state.step + 1) % 3
+
     }
     const step = computed(() => {
       return state.steps[state.step]
@@ -80,6 +83,10 @@ export default {
   position: absolute;
   z-index: 10;
   object-fit: contain;
+}
+.fill {
+  width: 100%;
+  height: 100%;
 }
 .instruction {
   display: grid;

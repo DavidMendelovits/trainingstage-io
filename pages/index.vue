@@ -10,7 +10,6 @@
     <!-- <Stage /> -->
     <!-- <Video /> -->
     <Vid />
-    <Vid />
   </div>
 </template>
 

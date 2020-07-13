@@ -3,6 +3,7 @@
     <video
       :src="src"
       id="player"
+      playsinline
       class="video"
       ref="player"
       @loadedmetadata="loadMetaData"

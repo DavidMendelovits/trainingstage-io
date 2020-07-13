@@ -11,7 +11,11 @@
       @exit="toggleInput"
     />
     <div class="player">
-      <Instructions class="instruction" v-show="state.instructions" />
+      <Instructions
+        class="instruction"
+        v-show="state.instructions"
+        @exit="toggleInstructions"
+      />
       <Player
         class="p"
         v-if="!state.embed"
@@ -124,7 +128,7 @@ export default {
 }
 .instruction {
   position: absolute;
-  top: 10%;
+  top: 5%;
   height: 100%;
   width: 100%;
   object-fit: contain;
