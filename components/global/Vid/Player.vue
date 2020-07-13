@@ -10,6 +10,7 @@
       type="video/mp4"
       :style="mirrorTransform"
     />
+
     <Control
       ref="controls"
       class="controls"
@@ -20,13 +21,14 @@
       @on="trimOn"
       @off="trimOff"
       @mirror="toggleMirror"
+      @question="toggleInstruction"
     />
   </div>
 </template>
 
 <script>
 import { onMounted, ref, computed, reactive } from '@vue/composition-api'
-// import { useContext } from 'nuxt-composition-api'
+import { useContext } from 'nuxt-composition-api'
 
 export default {
   props: {
@@ -46,6 +48,7 @@ export default {
     })
 
     // console.log(controls.value)
+    const { store } = useContext()
 
     const state = reactive({
       src: props.src,
@@ -63,12 +66,19 @@ export default {
       isLooping: true,
       right: 0,
       left: 0,
-      mirror: false
+      mirror: false,
+      instructions: false
     })
 
     const toggleMirror = () => {
       console.log('toggleMirror')
       state.mirror = !state.mirror
+    }
+
+
+    const toggleInstruction = () => {
+      console.log('hmm')
+      state.instructions = !(state.instructions)
     }
 
     const mirrorTransform = (computed(() => {
@@ -92,30 +102,6 @@ export default {
     const trimOn = () => {
       state.isTrimming = true
     }
-    //methods
-    // const play = () => {
-    //   state.isPaused = false
-    //   player.value.play()
-    // }
-    // const pause = () => {
-    //   state.isPaused = true
-    //   player.value.pause()
-    // }
-    // const togglePlayPause = () => {
-    //   (state.isPaused)
-    //   ? play()
-    //   : pause()
-    // }
-    // const seekForward = (frame) => {
-    //   console.log('->')
-    //   player.value.currentTime -= frame
-    //   pause()
-    // }
-    // const seekBackward = (frame) => {
-    //   console.log('<-')
-    //   player.value.currentTime += frame
-    //   pause()
-    // }
     const setTime = (to) => {
       console.log('set time to ', to)
       player.value.currentTime = to
@@ -183,7 +169,8 @@ export default {
       trimOn,
       trimOff,
       mirrorTransform,
-      toggleMirror
+      toggleMirror,
+      toggleInstruction
     }
   }
 }
@@ -199,6 +186,14 @@ export default {
 
 .video {
   width: 100%;
+}
+
+.instruction {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  object-fit: contain;
 }
 
 .controls {

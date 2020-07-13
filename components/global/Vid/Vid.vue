@@ -2,7 +2,7 @@
   <div class="">
     <div class="columns">
       <div class="column">
-        <Wrap />
+        <Wrapper />
       </div>
       <div v-if="split" class="column">
         <Wrapper />
@@ -26,7 +26,7 @@ export default {
     }))
 
     return {
-      split: split,
+      split,
       userIn
     }
   }

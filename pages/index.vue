@@ -10,6 +10,7 @@
     <!-- <Stage /> -->
     <!-- <Video /> -->
     <Vid />
+    <Footer />
   </div>
 </template>
 

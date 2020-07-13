@@ -4,7 +4,7 @@
     <div class="modal-card">
       <header class="modal-card-head">
         <p class="modal-card-title">Link or Upload a video</p>
-        <button class="delete" aria-label="close"></button>
+        <button class="delete" @click="exit" aria-label="close"></button>
       </header>
       <section class="modal-card-body">
         <WrapperInputForm v-on:submitted="getInput"/>
@@ -33,10 +33,11 @@ export default {
     const promptStatus = computed(() => {
       return (store.state.inputModal)
       ? 'is-active'
-      : ''
+      : 'is-active'
     })
     const exit = (e) => {
-      store.commit('TOGGLE_INPUT')
+      // store.commit('TOGGLE_INPUT')
+      emit('exit')
     }
     const getInput = (data) => {
       emit('input', data)

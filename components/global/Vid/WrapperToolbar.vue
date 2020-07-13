@@ -8,6 +8,9 @@
         <div class="level-item">
           <WrapperToolbarButton icon="icon-reload" />
         </div> -->
+        <div class="level-item" @click="overlayInstructions">
+          <WrapperToolbarButton icon="icon-question" />
+        </div>
         <div class="level-item" @click="promptUserInput">
           <WrapperToolbarButton icon="icon-paper-clip" />
         </div>
@@ -42,20 +45,28 @@ export default {
     const promptUserInput = () => {
       console.log('promptuserInput')
       emit('paperclip')
-      store.commit('TOGGLE_INPUT')
+      // store.commit('TOGGLE_INPUT')
     }
     const toggleSplit = () => {
+      store.commit('TOGGLE_SPLIT')
       if (!(state.split = !state.split)) {
 
       } else {
 
       }
     }
+    const overlayInstructions = () => {
+      console.log('overlayInstruction')
+      emit('question')
+
+      store.commit('TOGGLE_INSTRUCTION')
+    }
 
     return {
       state,
       promptUserInput,
-      toggleSplit
+      toggleSplit,
+      overlayInstructions
     }
   },
   methods: {
