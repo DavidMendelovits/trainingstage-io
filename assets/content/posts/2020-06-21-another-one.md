@@ -17,4 +17,4 @@ Nunc quis quam feugiat est varius rutrum. Phasellus sit amet pretium est, id ali
 
 Aenean convallis turpis aliquet, eleifend eros nec, mattis est. Proin ex massa, consectetur eget dui convallis, efficitur eleifend nulla. Ut sodales sem eget turpis tristique aliquam. Cras urna leo, fringilla in pharetra in, hendrerit vel magna. Integer ex nunc, tincidunt quis velit a, euismod varius magna. Nulla sed arcu rutrum, consequat nibh eget, volutpat mauris. Sed et volutpat magna, id fermentum lorem. Vestibulum ac eros ut odio volutpat facilisis eu eget libero. Proin risus purus, eleifend a enim vitae, rhoncus porttitor justo. Donec volutpat augue orci, at tempus velit varius ac. Nam sagittis, felis euismod mattis molestie, augue mi fermentum velit, sed scelerisque arcu turpis at enim. In in justo cursus, lobortis nunc venenatis, euismod nunc. Vivamus quis enim erat. Nunc non diam bibendum, condimentum orci eget, volutpat velit. Nunc porttitor varius ipsum sit amet suscipit. Proin id commodo lorem, porttitor commodo nulla.
 
-<player src="https://thumbs.gfycat.com/ExcellentVigilantGalapagoshawk-mobile.mp4"></player>
+<Vid></Vid>

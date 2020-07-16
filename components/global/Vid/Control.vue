@@ -89,11 +89,16 @@ export default {
     onUpdated(() => {
       setPlaybackRate(props.player, props.playbackRate)
     })
+
     const handleSeeking = (e) => {
       const face = (e.touches) ? e.touches[0] : e
       const videoBorderInfo = e.target.getBoundingClientRect()
-      const target = (props.duration) * ((face.x + videoBorderInfo.left) / videoBorderInfo.right)
-      setTime(props.player, target)
+      const offset = () => {
+        const offset = face.x - videoBorderInfo.left
+        return ((offset / videoBorderInfo.width) * props.duration)
+      }
+      // console.log('offset: ', offset())
+      setTime(props.player, offset())
     }
 
     const handleEndCursor = (e, ptr) => {
@@ -165,7 +170,8 @@ export default {
       cursors,
       toggleTrim,
       handleTimeUpdate,
-      mirror
+      mirror,
+      togglePlayPause
     }
   }
 }

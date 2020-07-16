@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="card" v-hotkey="keymap">
     <nav class="level is-mobile">
       <div class="level-left">
         <!-- <div class="level-item">
@@ -72,6 +72,14 @@ export default {
 
       }
     }
+
+    const keymap = computed(() => {
+      return {
+        '[': () => changeSpeed('slow'),
+        ']': () => changeSpeed('fast')
+      } 
+    })
+
     const overlayInstructions = () => {
       console.log('overlayInstruction')
       emit('question')
@@ -84,7 +92,8 @@ export default {
       promptUserInput,
       toggleSplit,
       overlayInstructions,
-      changeSpeed
+      changeSpeed,
+      keymap
     }
   },
   methods: {

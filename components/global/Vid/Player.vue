@@ -1,5 +1,5 @@
 <template>
-  <div class="videoContainer">
+  <div class="videoContainer" v-hotkey="keymap">
     <video
       :src="src"
       id="player"
@@ -31,6 +31,7 @@
 <script>
 import { onMounted, ref, computed, reactive, watchEffect } from '@vue/composition-api'
 import { useContext } from 'nuxt-composition-api'
+import { togglePlayPause, seekForward, seekBackward, setPlaybackRate } from './utils'
 
 export default {
   props: {
@@ -78,6 +79,17 @@ export default {
       instructions: false
     })
 
+    const keymap = computed(() => {
+      return {
+        'space': ($event) => {
+          console.log(event)
+          event.preventDefault()
+          togglePlayPause(player.value, state)
+        },
+        'right': () => seekForward(player.value, state, state.frame),
+        'left': () => seekBackward(player.value, state, state.frame),
+      }
+    })
     const toggleMirror = () => {
       console.log('toggleMirror')
       state.mirror = !state.mirror
@@ -178,7 +190,8 @@ export default {
       trimOff,
       mirrorTransform,
       toggleMirror,
-      toggleInstruction
+      toggleInstruction,
+      keymap
     }
   }
 }
