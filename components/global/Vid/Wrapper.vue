@@ -43,7 +43,7 @@ export default {
   props: {
     videoSource: {
       required: false,
-      default: 'default.mp4'
+      default: 'backflip.mp4'
     }
   },
   setup (props, { emit }) {
