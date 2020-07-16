@@ -155,6 +155,8 @@ export default {
 
 .p {
   position: absolute;
+  object-fit: cover;
+  max-height: 50vh;
   top: 0;
 }
 
